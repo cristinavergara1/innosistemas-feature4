@@ -1,6 +1,5 @@
 package com.udea.innosistemas.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udea.innosistemas.service.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,9 +25,6 @@ class AuthControllerTest {
 
     @MockBean
     private AuthenticationService authenticationService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
@@ -39,5 +37,20 @@ class AuthControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("Auth service is running"));
+    }
+
+    @Test
+    void deberiaRechazarRutaInvalida() throws Exception {
+        mockMvc.perform(get("/auth/invalid-endpoint"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void deberiaRetornarBadRequestSiLoginEsInvalido() throws Exception {
+        mockMvc.perform(post("/auth/login")
+                        .contentType("application/json")
+                        .content("{}")) //
+                .andExpect(status().is4xxClientError());
     }
 }
