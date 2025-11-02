@@ -38,6 +38,6 @@ class AuthControllerTest {
         mockMvc.perform(get("/auth/health"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("Servicio de autenticación activo"));
+                .andExpect(content().string("Auth service is running"));
     }
 }
