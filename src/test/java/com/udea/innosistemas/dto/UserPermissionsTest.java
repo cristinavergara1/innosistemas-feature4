@@ -71,16 +71,23 @@ class UserPermissionsTest {
     void testNotificationPermissionsAreCalculatedCorrectly() {
         // Arrange & Act
         UserPermissions adminUser = new UserPermissions(1L, UserRole.ADMIN, Arrays.asList("ALL_PERMISSIONS"));
-        UserPermissions taUser = new UserPermissions(2L, UserRole.TA, Arrays.asList("LIMITED_PERMISSIONS"));
+        UserPermissions professorUser = new UserPermissions(2L, UserRole.PROFESSOR, Arrays.asList("LIMITED_PERMISSIONS"));
+        UserPermissions studentUser = new UserPermissions(3L, UserRole.STUDENT, Arrays.asList());
 
-        // Assert - ADMIN puede todo, TA solo notificaciones
+        // Assert - ADMIN puede todo
         assertTrue(adminUser.isCanSendNotifications());
         assertTrue(adminUser.isCanManageTeam());
         assertTrue(adminUser.isCanManageCourse());
 
-        assertTrue(taUser.isCanSendNotifications());
-        assertFalse(taUser.isCanManageTeam());
-        assertFalse(taUser.isCanManageCourse());
+        // Assert - PROFESSOR puede notificaciones y gestión
+        assertTrue(professorUser.isCanSendNotifications());
+        assertTrue(professorUser.isCanManageTeam());
+        assertTrue(professorUser.isCanManageCourse());
+
+        // Assert - STUDENT no puede hacer gestión administrativa
+        assertFalse(studentUser.isCanSendNotifications());
+        assertFalse(studentUser.isCanManageTeam());
+        assertFalse(studentUser.isCanManageCourse());
     }
 
     @Test
