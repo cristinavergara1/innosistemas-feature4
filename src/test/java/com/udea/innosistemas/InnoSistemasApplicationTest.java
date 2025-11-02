@@ -23,6 +23,8 @@ class InnoSistemasApplicationTest {
     void systemPropertiesShouldBeConfigured() {
         assertEquals("America/Bogota", System.getProperty("user.timezone"));
         assertEquals("UTF-8", System.getProperty("file.encoding", "UTF-8"));
+        assertEquals("true", System.getProperty("java.awt.headless"));
+        assertEquals("console", System.getProperty("spring.main.banner-mode"));
     }
 
     @Test
