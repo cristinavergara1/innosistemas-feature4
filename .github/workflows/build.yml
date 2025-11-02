@@ -9,7 +9,7 @@ on:
 
 jobs:
   tests:
-    name: 🧪 Unit Tests
+    name:  Unit Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
 
   sonar:
     needs: tests
-    name: 🔍 SonarCloud Analysis
+    name:  SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,14 +58,14 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Analyze with SonarCloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=JAMESLEONARDGRIJALBABOLANOS_innosistemas-feature4 -Dsonar.organization=jamesleonardgrijalbabolanos -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=cristinavergara1_innosistemas-feature4 -Dsonar.organization=cristinavergara1 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build:
     needs: sonar
-    name: ⚙️ Build JAR
+    name:  Build JAR
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
 
   docker:
     needs: build
-    name: 🐳 Build & Push Docker Image
+    name: Build & Push Docker Image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
