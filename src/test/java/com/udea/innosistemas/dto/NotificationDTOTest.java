@@ -41,7 +41,7 @@ class NotificationDTOTest {
         notification.setTeamId(5L);
         notification.setCursoId(10L);
         notification.setPrioridad(Notification.NotificationPriority.ALTA); // Usar el enum interno
-        notification.setEnlace("https://app.udea.edu.co/tasks/123");
+        notification.setEnlace("https://innosistemas.udea.edu.co/tasks/123");
         notification.setMetadata("{\"taskId\":123,\"course\":\"Web Programming\"}");
         notification.setExpiraEn(LocalDateTime.now().plusDays(7));
 
@@ -96,7 +96,7 @@ class NotificationDTOTest {
         Long expectedTeamId = 8L;
         Long expectedCursoId = 15L;
         String expectedPrioridad = "MEDIA";
-        String expectedEnlace = "https://app.udea.edu.co/grades/456";
+        String expectedEnlace = "https://innosistemas.udea.edu.co/grades/456";
         String expectedMetadata = "{\"gradeId\":456,\"score\":85}";
         LocalDateTime expectedExpiraEn = LocalDateTime.now().plusDays(30);
 
@@ -195,7 +195,7 @@ class NotificationDTOTest {
     void testNotificationWithLink() {
         // Arrange
         NotificationDTO dto = new NotificationDTO();
-        String enlace = "https://classroom.udea.edu.co/assignment/789";
+        String enlace = "https://innosistemas.udea.edu.co/assignment/789";
         String metadata = "{\"assignmentId\":789,\"dueDate\":\"2024-12-15\"}";
 
         // Act
