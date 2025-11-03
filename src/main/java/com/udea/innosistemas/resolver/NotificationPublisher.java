@@ -112,13 +112,8 @@ public class NotificationPublisher {
         });
 
         return sink.asFlux()
-                .doOnCancel(() -> {
-                    logger.info("Usuario {} canceló su suscripción de notificaciones", userId);
-                    // Opcional: limpiar el sink si no hay más suscriptores
-                })
-                .doOnTerminate(() -> {
-                    logger.debug("Suscripción de notificaciones terminada para usuario {}", userId);
-                });
+                .doOnCancel(() -> logger.info("Usuario {} canceló su suscripción de contador", userId))
+                .doOnTerminate(() -> logger.debug("Suscripción de contador terminada para usuario {}", userId));
     }
 
     /**
