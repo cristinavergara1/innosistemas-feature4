@@ -23,11 +23,11 @@ import jakarta.validation.ConstraintViolationException;
 @Component
 public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(GraphQLExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GraphQLExceptionHandler.class);
 
     @Override
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-        logger.error("GraphQL error occurred: {}", ex.getMessage(), ex);
+        LOG.error("GraphQL error occurred: {}", ex.getMessage(), ex);
 
         if (ex instanceof AuthenticationException) {
             return GraphqlErrorBuilder.newError()
