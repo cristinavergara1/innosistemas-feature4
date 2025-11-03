@@ -3,6 +3,7 @@ package com.udea.innosistemas.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.Nullable;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.lang.Nullable;
 
 /**
  * Interceptor para autenticación JWT en conexiones WebSocket
@@ -40,6 +42,7 @@ public class GraphQLWebSocketAuthInterceptor implements ChannelInterceptor {
     }
 
     @Override
+    @Nullable
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
