@@ -28,7 +28,7 @@ import java.util.Map;
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -38,7 +38,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication != null ? authentication.getName() : "anonymous";
 
-        logger.warn("Access denied for user '{}' to resource '{}': {}",
+        LOG.warn("Access denied for user '{}' to resource '{}': {}",
                 username, request.getRequestURI(), accessDeniedException.getMessage());
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
