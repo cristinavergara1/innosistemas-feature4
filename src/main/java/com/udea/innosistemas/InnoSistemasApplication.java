@@ -1,5 +1,7 @@
 package com.udea.innosistemas;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -33,73 +35,41 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ConfigurationPropertiesScan(basePackages = "com.udea.innosistemas.config.properties")
 public class InnoSistemasApplication {
 
-    /**
-     * Método principal que inicia la aplicación Spring Boot
-     * 
-     * @param args argumentos de línea de comandos
-     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(InnoSistemasApplication.class);
+
     public static void main(String[] args) {
-        // Configurar propiedades del sistema antes de iniciar la aplicación
         configureSystemProperties();
-        
-        // Iniciar la aplicación Spring Boot
         SpringApplication application = new SpringApplication(InnoSistemasApplication.class);
-        
-        // Configurar propiedades adicionales de la aplicación
         configureApplicationProperties(application);
-        
-        // Ejecutar la aplicación
         application.run(args);
-        
-        // Log de inicio exitoso
         logApplicationStartup();
     }
-    
-    /**
-     * Configura las propiedades del sistema necesarias para la aplicación
-     */
+
     private static void configureSystemProperties() {
-        // Configurar zona horaria por defecto para Colombia
         System.setProperty("user.timezone", "America/Bogota");
-        
-        // Configurar encoding por defecto
         System.setProperty("file.encoding", "UTF-8");
-        
-        // Configurar propiedades de JVM para mejor rendimiento
         System.setProperty("java.awt.headless", "true");
-        
-        // Configurar propiedades de seguridad
         System.setProperty("spring.main.banner-mode", "console");
     }
-    
-    /**
-     * Configura propiedades adicionales de la aplicación Spring Boot
-     * 
-     * @param application instancia de SpringApplication
-     */
+
     private static void configureApplicationProperties(SpringApplication application) {
-        // Configurar propiedades adicionales si es necesario
         application.setRegisterShutdownHook(true);
-        
-        // Configurar listeners personalizados si es necesario
-        // application.addListeners(new CustomApplicationListener());
     }
-    
-    /**
-     * Registra un mensaje de inicio exitoso de la aplicación
-     */
+
     private static void logApplicationStartup() {
-        System.out.println("\n" +
-            "============================================================\n" +
-            "    INNOSISTEMAS - BACKEND API INICIADO EXITOSAMENTE      \n" +
-            "============================================================\n" +
-            "  Universidad de Antioquia - Facultad de Ingeniería       \n" +
-            "  Programa de Ingeniería de Sistemas                      \n" +
-            "  Fábrica-Escuela de Software CodeF@ctory UdeA            \n" +
-            "============================================================\n" +
-            "  Version: 1.0.0                                          \n" +
-            "  Profile: " + System.getProperty("spring.profiles.active", "default") + "\n" +
-            "  Timezone: " + System.getProperty("user.timezone") + "\n" +
-            "============================================================\n");
+        LOGGER.info("\n" +
+                        "============================================================\n" +
+                        "    INNOSISTEMAS - BACKEND API INICIADO EXITOSAMENTE      \n" +
+                        "============================================================\n" +
+                        "  Universidad de Antioquia - Facultad de Ingeniería       \n" +
+                        "  Programa de Ingeniería de Sistemas                      \n" +
+                        "  Fábrica-Escuela de Software CodeF@ctory UdeA            \n" +
+                        "============================================================\n" +
+                        "  Version: 1.0.0                                          \n" +
+                        "  Profile: {}\n" +
+                        "  Timezone: {}\n" +
+                        "============================================================",
+                System.getProperty("spring.profiles.active", "default"),
+                System.getProperty("user.timezone"));
     }
 }
