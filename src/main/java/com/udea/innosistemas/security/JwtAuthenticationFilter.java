@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(jwt)) {
                 // Verificar que el token no esté en la blacklist
                 if (tokenBlacklistService.isTokenBlacklisted(jwt)) {
-                    logger.warn("Attempted to use blacklisted token");
+                    LOG.warn("Attempted to use blacklisted token");
                     filterChain.doFilter(request, response);
                     return;
                 }
@@ -62,11 +62,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    logger.debug("User authenticated successfully: {}", username);
+                    LOG.debug("User authenticated successfully: {}", username);
                 }
             }
         } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+            LOG.error("Could not set user authentication in security context", ex);
         }
 
         filterChain.doFilter(request, response);
