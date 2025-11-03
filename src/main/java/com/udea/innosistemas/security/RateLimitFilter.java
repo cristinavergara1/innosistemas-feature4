@@ -27,7 +27,7 @@ import java.io.IOException;
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(RateLimitFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RateLimitFilter.class);
 
     @Autowired
     private RateLimitingService rateLimitingService;
@@ -52,7 +52,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
         if (!allowed) {
             // Rate limit excedido
-            logger.warn("Rate limit exceeded for key: {} on endpoint: {}", key, request.getRequestURI());
+            LOG.warn("Rate limit exceeded for key: {} on endpoint: {}", key, request.getRequestURI());
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
             response.setContentType("application/json");
             response.getWriter().write(
@@ -142,7 +142,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             response.setHeader("X-RateLimit-Remaining", String.valueOf(availableTokens));
             response.setHeader("X-RateLimit-Limit", "100"); // Podría ser dinámico
         } catch (Exception e) {
-            logger.debug("Error adding rate limit headers: {}", e.getMessage());
+            LOG.debug("Error adding rate limit headers: {}", e.getMessage());
         }
     }
 
