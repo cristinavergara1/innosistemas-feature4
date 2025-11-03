@@ -28,7 +28,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class GraphQLSecurityInterceptor implements WebGraphQlInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(GraphQLSecurityInterceptor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GraphQLSecurityInterceptor.class);
 
     @Value("${spring.graphql.schema.introspection.enabled:false}")
     private boolean introspectionEnabled;
@@ -41,7 +41,7 @@ public class GraphQLSecurityInterceptor implements WebGraphQlInterceptor {
         String operationName = request.getOperationName();
         String document = request.getDocument();
 
-        logger.debug("GraphQL operation: {}, document: {}", operationName, document);
+        LOG.debug("GraphQL operation: {}, document: {}", operationName, document);
 
         // Si no hay autenticación y la operación no es login, denegar acceso
         if (authentication == null || !authentication.isAuthenticated() ||
@@ -58,16 +58,16 @@ public class GraphQLSecurityInterceptor implements WebGraphQlInterceptor {
                 (document.contains("IntrospectionQuery") ||
                  document.contains("__schema") ||
                  document.contains("__type"))) {
-                logger.debug("Allowing introspection query in development mode");
+                LOG.debug("Allowing introspection query in development mode");
                 return chain.next(request);
             }
 
-            logger.warn("Unauthenticated GraphQL request blocked: {}", operationName);
+            LOG.warn("Unauthenticated GraphQL request blocked: {}", operationName);
             return Mono.error(new AccessDeniedException("Autenticación requerida"));
         }
 
         // Log de la operación autenticada
-        logger.info("GraphQL operation '{}' by user: {}", operationName, authentication.getName());
+        LOG.info("GraphQL operation '{}' by user: {}", operationName, authentication.getName());
 
         return chain.next(request);
     }
@@ -79,11 +79,11 @@ public class GraphQLSecurityInterceptor implements WebGraphQlInterceptor {
     @Component
     public static class GraphQLExceptionResolver extends DataFetcherExceptionResolverAdapter {
 
-        private static final Logger logger = LoggerFactory.getLogger(GraphQLExceptionResolver.class);
+        private static final Logger LOG = LoggerFactory.getLogger(GraphQLExceptionResolver.class);
 
         @Override
         protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-            logger.error("GraphQL error in field {}: {}", env.getField().getName(), ex.getMessage());
+            LOG.error("GraphQL error in field {}: {}", env.getField().getName(), ex.getMessage());
 
             if (ex instanceof AccessDeniedException) {
                 return GraphqlErrorBuilder.newError()
