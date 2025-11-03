@@ -56,19 +56,21 @@ public class InnoSistemasApplication {
     }
 
     private static void logApplicationStartup() {
-        LOGGER.info("\n" +
-                        "============================================================\n" +
-                        "    INNOSISTEMAS - BACKEND API INICIADO EXITOSAMENTE      \n" +
-                        "============================================================\n" +
-                        "  Universidad de Antioquia - Facultad de Ingeniería       \n" +
-                        "  Programa de Ingeniería de Sistemas                      \n" +
-                        "  Fábrica-Escuela de Software CodeF@ctory UdeA            \n" +
-                        "============================================================\n" +
-                        "  Version: 1.0.0                                          \n" +
-                        "  Profile: {}\n" +
-                        "  Timezone: {}\n" +
-                        "============================================================",
+        String message = String.format("""
+            
+            ============================================================
+                INNOSISTEMAS - BACKEND API INICIADO EXITOSAMENTE      
+            ============================================================
+              Universidad de Antioquia - Facultad de Ingeniería       
+              Programa de Ingeniería de Sistemas                      
+              Fábrica-Escuela de Software CodeF@ctory UdeA            
+            ============================================================
+              Version: 1.0.0                                          
+              Profile: %s
+              Timezone: %s
+            ============================================================""",
                 System.getProperty("spring.profiles.active", "default"),
                 System.getProperty("user.timezone"));
+        LOGGER.info(message);
     }
 }
