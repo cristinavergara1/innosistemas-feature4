@@ -1,6 +1,6 @@
 package com.udea.innosistemas.security;
 
-import com.udea.innosistemas.entity.UserRole;
+
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
 import graphql.schema.DataFetchingEnvironment;

@@ -3,7 +3,6 @@ package com.udea.innosistemas.config;
 import com.udea.innosistemas.security.directive.AuthDirective;
 import com.udea.innosistemas.security.directive.RequiresCourseDirective;
 import com.udea.innosistemas.security.directive.RequiresTeamDirective;
-import graphql.schema.idl.RuntimeWiring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
